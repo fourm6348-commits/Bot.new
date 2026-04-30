@@ -1,8 +1,21 @@
-import discord
-import os  # <--- ต้องเพิ่มบรรทัดนี้เข้าไปด้วย!
 from discord import app_commands
 from discord.ext import commands
 from datetime import datetime
+from flask import Flask
+from threading import Thread
+
+# --- ระบบ Web Server สำหรับ UptimeRobot ---
+app = Flask('')
+@app.route('/')
+def home():
+    return "I'm alive!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run_web)
+    t.start()
 
 # ================= ตั้งค่า ID ห้อง และ คำห้ามใช้ =================
 TOKEN = os.getenv('DISCORD_TOKEN')
